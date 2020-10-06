@@ -62,7 +62,7 @@ public class Turnero {
 
         List<Cliente> clientes = repoClientes.obtenerClientes();
 
-        ////// resolver con streams
+        ////// resolver con streams -> allMatch(cliente -> cliente.getTurnos...)
         boolean todosTienenTurno = true;
         for (Cliente cliente : clientes) {
 
