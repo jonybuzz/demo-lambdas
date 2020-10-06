@@ -10,6 +10,14 @@ public class Turnero {
 
     private final RepositorioClientes repoClientes = new RepositorioClientes();
 
+//    Ejemplos:
+//    lista.stream()
+//                .filter(elem -> elem == 1)
+//                .collect(toList());
+//    lista.stream()
+//                .map(elem -> elem * 2)
+//                .anyMatch(elem -> elem > 10);
+    
     public List<Turno> obtenerTodosLosTurnos() {
         List<Cliente> clientes = repoClientes.obtenerClientes();
 
