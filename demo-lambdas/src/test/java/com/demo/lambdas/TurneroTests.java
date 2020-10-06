@@ -39,6 +39,15 @@ public class TurneroTests {
     }
 
     @Test
+    public void todosLosClientesTienenTurno() {
+
+        Boolean todosTienenTurno = turnero.todosLosClientesTienenTurno();
+
+        assertThat(todosTienenTurno).isTrue();
+
+    }
+
+    @Test
     public void obtenerClientesQueSacaronTurnoPara_retirar() {
 
         List<Cliente> clientes = turnero.obtenerClientesQueSacaronTurnoPara(RETIRAR);
