@@ -5,6 +5,7 @@ import com.demo.lambdas.dominio.Operacion;
 import com.demo.lambdas.dominio.Turno;
 import java.util.ArrayList;
 import java.util.List;
+import static java.util.stream.Collectors.toList;
 
 public class Turnero {
 
@@ -14,11 +15,9 @@ public class Turnero {
         List<Cliente> clientes = repoClientes.obtenerClientes();
 
         ////// resolver con streams
-        ArrayList<Turno> turnos = new ArrayList<>();
-
-        for (Cliente cliente : clientes) {
-            turnos.addAll(cliente.getTurnos());
-        }
+        List<Turno> turnos = clientes.stream()
+                .flatMap(c -> c.getTurnos().stream())
+                .collect(toList());
         //////
 
         return turnos;
@@ -29,11 +28,9 @@ public class Turnero {
         List<Cliente> clientes = repoClientes.obtenerClientes();
 
         ////// resolver con streams
-        ArrayList<String> dnis = new ArrayList<>();
-
-        for (Cliente cliente : clientes) {
-            dnis.add(cliente.getDni());
-        }
+        List<String> dnis = clientes.stream()
+                .map(c -> c.getDni())
+                .collect(toList());
         //////
 
         return dnis;
@@ -44,15 +41,10 @@ public class Turnero {
         List<Cliente> clientes = repoClientes.obtenerClientes();
 
         ////// resolver con streams
-        ArrayList<Turno> turnos = new ArrayList<>();
-
-        for (Cliente cliente : clientes) {
-
-            if (cliente.getDni().endsWith(terminacionDni)) {
-                turnos.addAll(cliente.getTurnos());
-            }
-
-        }
+        List<Turno> turnos = clientes.stream()
+                .filter(c -> c.getDni().endsWith(terminacionDni))
+                .flatMap(c -> c.getTurnos().stream())
+                .collect(toList());
         //////
 
         return turnos;
@@ -63,19 +55,9 @@ public class Turnero {
         List<Cliente> clientes = repoClientes.obtenerClientes();
 
         ////// resolver con streams
-        boolean todosTienenTurno = true;
-        for (Cliente cliente : clientes) {
-
-            if (cliente.getTurnos().isEmpty()) {
-                todosTienenTurno = false;
-                break;
-            }
-
-            return todosTienenTurno;
-
-        }
-
-        return true; //Si la lista de clientes esta vacia y no entra en el for
+        boolean todosTienenTurno = clientes.stream()
+                .allMatch(c -> !c.getTurnos().isEmpty());
+        return todosTienenTurno;
         //////
     }
 
@@ -84,24 +66,10 @@ public class Turnero {
         List<Cliente> clientes = repoClientes.obtenerClientes();
 
         ////// resolver con streams
-        ArrayList<Cliente> clientesFiltrados = new ArrayList<>();
-
-        for (Cliente cliente : clientes) {
-
-            boolean algunTurnoCumpleCondicion = false;
-
-            for (Turno turnoCliente : cliente.getTurnos()) {
-                if (turnoCliente.getOperacion().equals(operacion)) {
-                    algunTurnoCumpleCondicion = true;
-                    break;
-                }
-            }
-
-            if (algunTurnoCumpleCondicion) {
-                clientesFiltrados.add(cliente);
-            }
-
-        }
+        List<Cliente> clientesFiltrados = clientes.stream()
+                .filter(c -> c.getTurnos().stream()
+                        .anyMatch(t -> t.getOperacion().equals(operacion)))
+                .collect(toList());
         //////
 
         return clientesFiltrados;
