@@ -21,7 +21,7 @@ public class Turnero {
     public List<Turno> obtenerTodosLosTurnos() {
         List<Cliente> clientes = repoClientes.obtenerClientes();
 
-        ////// resolver con streams -> map(cliente -> ...) + collect(...)
+        ////// resolver con streams -> flatMap(cliente -> cliente.turnos.stream...) + collect(...)
         ArrayList<Turno> turnos = new ArrayList<>();
 
         for (Cliente cliente : clientes) {
@@ -70,7 +70,7 @@ public class Turnero {
 
         List<Cliente> clientes = repoClientes.obtenerClientes();
 
-        ////// resolver con streams -> allMatch(cliente -> cliente.getTurnos...)
+        ////// resolver con streams -> allMatch(cliente -> cliente...)
         boolean todosTienenTurno = true;
         for (Cliente cliente : clientes) {
 
@@ -91,7 +91,7 @@ public class Turnero {
 
         List<Cliente> clientes = repoClientes.obtenerClientes();
 
-        ////// resolver con streams -> map(cliente -> turnos anyMatch()) + collect(...)
+        ////// resolver con streams -> map(cliente -> cliente.turnos.stream.anyMatch...) + collect(...)
         ArrayList<Cliente> clientesFiltrados = new ArrayList<>();
 
         for (Cliente cliente : clientes) {
