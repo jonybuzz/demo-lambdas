@@ -58,6 +58,27 @@ public class Turnero {
         return turnos;
     }
 
+    public Boolean todosLosClientesTienenTurno() {
+
+        List<Cliente> clientes = repoClientes.obtenerClientes();
+
+        ////// resolver con streams
+        boolean todosTienenTurno = true;
+        for (Cliente cliente : clientes) {
+
+            if (cliente.getTurnos().isEmpty()) {
+                todosTienenTurno = false;
+                break;
+            }
+
+            return todosTienenTurno;
+
+        }
+
+        return true; //Si la lista de clientes esta vacia y no entra en el for
+        //////
+    }
+
     public List<Cliente> obtenerClientesQueSacaronTurnoPara(Operacion operacion) {
 
         List<Cliente> clientes = repoClientes.obtenerClientes();
